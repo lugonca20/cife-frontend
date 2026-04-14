@@ -1,0 +1,49 @@
+<div class="flex flex-col gap-3">
+
+  <div *ngIf="imagenes.length > 0"
+       class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+    <div *ngFor="let url of imagenes"
+         class="relative group rounded-xl overflow-hidden border
+                border-cife-border" style="aspect-ratio: 16/9;">
+      <img [src]="url" alt="Imagen"
+           class="w-full h-full object-cover object-center"/>
+      <div class="absolute inset-0 bg-black/0 group-hover:bg-black/30
+                  transition-colors"></div>
+      <button (click)="eliminar($event, url)"
+              type="button"
+              class="absolute top-2 right-2 w-7 h-7 bg-red-500 hover:bg-red-600
+                     text-white rounded-full text-xs font-medium transition-colors
+                     opacity-0 group-hover:opacity-100 flex items-center
+                     justify-center z-10">
+        ✕
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="error" class="text-red-500 text-xs">{{ error }}</div>
+
+  <label class="flex items-center gap-3 cursor-pointer border border-dashed
+                border-cife-border hover:border-cife-primary rounded-xl p-4
+                transition-colors group">
+    <div class="w-9 h-9 bg-cife-soft rounded-lg flex items-center justify-center
+                flex-shrink-0 group-hover:bg-cife-primary transition-colors">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#2A8C7A" stroke-width="2"
+           stroke-linecap="round" class="w-4 h-4 group-hover:stroke-white
+           transition-colors">
+        <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+        <polyline points="17 8 12 3 7 8"/>
+        <line x1="12" y1="3" x2="12" y2="15"/>
+      </svg>
+    </div>
+    <div>
+      <p class="text-sm font-medium text-cife-text">
+        {{ subiendo ? 'Subiendo...' : 'Agregar imagen' }}
+      </p>
+      <p class="text-xs text-cife-muted">JPG, PNG o WEBP · Máx. 10MB</p>
+    </div>
+    <input type="file" accept="image/jpeg,image/png,image/webp"
+           class="hidden" (change)="seleccionar($event)"
+           [disabled]="subiendo"/>
+  </label>
+
+</div>

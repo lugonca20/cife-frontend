@@ -1,0 +1,98 @@
+<div class="max-w-4xl mx-auto px-4 py-10">
+
+  <a routerLink="/cursos"
+     class="text-cife-primary text-sm hover:text-cife-dark transition-colors mb-6 inline-block">
+    ← Volver a cursos
+  </a>
+
+  <app-loading-spinner *ngIf="cargando" />
+
+  <div *ngIf="!cargando && curso">
+
+    <div class="mb-6">
+      <span [class]="curso.modalidad === 'PRESENCIAL' ? 'badge-presencial' :
+                     curso.modalidad === 'VIRTUAL' ? 'badge-virtual' :
+                     'badge-semipresencial'">
+        {{ curso.modalidad === 'PRESENCIAL' ? 'Presencial' :
+           curso.modalidad === 'VIRTUAL' ? 'Virtual' : 'Semi-presencial' }}
+      </span>
+    </div>
+
+    <div *ngIf="curso.imagenes && curso.imagenes.length > 0" class="mb-8">
+      <app-carousel [imagenes]="curso.imagenes" [alt]="curso.titulo"></app-carousel>
+    </div>
+
+    <h1 class="font-display text-3xl font-medium text-cife-text mb-4">
+      {{ curso.titulo }}
+    </h1>
+
+    <div class="flex flex-wrap gap-2 mb-8">
+      <span *ngIf="curso.frecuencia" class="chip">{{ curso.frecuencia }}</span>
+      <span *ngIf="curso.horario" class="chip">{{ curso.horario }}</span>
+      <span *ngIf="curso.duracion" class="chip">{{ curso.duracion }}</span>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+
+      <div class="md:col-span-2 flex flex-col gap-6">
+
+        <div *ngIf="curso.descripcion">
+          <h2 class="font-display font-medium text-cife-text text-lg mb-2">Descripción</h2>
+          <p class="text-cife-muted text-sm leading-relaxed">{{ curso.descripcion }}</p>
+        </div>
+
+        <div *ngIf="curso.objetivo">
+          <h2 class="font-display font-medium text-cife-text text-lg mb-2">Objetivo</h2>
+          <p class="text-cife-muted text-sm leading-relaxed">{{ curso.objetivo }}</p>
+        </div>
+
+        <div *ngIf="curso.requisitos">
+          <h2 class="font-display font-medium text-cife-text text-lg mb-2">Requisitos</h2>
+          <p class="text-cife-muted text-sm leading-relaxed">{{ curso.requisitos }}</p>
+        </div>
+
+      </div>
+
+      <div class="flex flex-col gap-3">
+        <div class="card-cife">
+          <p class="text-xs text-cife-muted uppercase tracking-widest mb-3">Información del curso</p>
+
+          <div *ngIf="curso.fechaInicio" class="flex flex-col gap-1 mb-3">
+            <p class="text-xs text-cife-muted">Fecha de inicio</p>
+            <p class="text-sm font-medium text-cife-text">
+              {{ curso.fechaInicio | date:'dd/MM/yyyy' }}
+            </p>
+          </div>
+
+          <div *ngIf="curso.horario" class="flex flex-col gap-1 mb-3">
+            <p class="text-xs text-cife-muted">Horario</p>
+            <p class="text-sm font-medium text-cife-text">{{ curso.horario }}</p>
+          </div>
+
+          <div *ngIf="curso.frecuencia" class="flex flex-col gap-1 mb-3">
+            <p class="text-xs text-cife-muted">Frecuencia</p>
+            <p class="text-sm font-medium text-cife-text">{{ curso.frecuencia }}</p>
+          </div>
+
+          <div *ngIf="curso.duracion" class="flex flex-col gap-1">
+            <p class="text-xs text-cife-muted">Duración</p>
+            <p class="text-sm font-medium text-cife-text">{{ curso.duracion }}</p>
+          </div>
+        </div>
+
+        <a routerLink="/contacto"
+           class="btn-primary text-center text-sm">
+          Consultar por este curso
+        </a>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div *ngIf="!cargando && !curso"
+       class="text-center py-16 text-cife-muted text-sm">
+    No se encontró el curso solicitado.
+  </div>
+
+</div>

@@ -1,0 +1,76 @@
+<div class="min-h-screen bg-cife-bg">
+  <div class="max-w-2xl mx-auto px-4 py-8">
+
+    <div class="mb-6">
+      <a routerLink="/admin/novedades"
+         class="text-cife-muted text-xs hover:text-cife-primary transition-colors mb-1 inline-block">
+        ← Volver a novedades
+      </a>
+      <h1 class="font-display font-medium text-cife-text text-xl">
+        {{ esEdicion ? 'Editar novedad' : 'Nueva novedad' }}
+      </h1>
+    </div>
+
+    <div *ngIf="error"
+         class="bg-red-50 border border-red-200 rounded-xl p-4 mb-6 text-sm text-red-700">
+      Ocurrió un error al guardar. Por favor intentá de nuevo.
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="guardar()" class="card-cife flex flex-col gap-5">
+
+      <div class="flex flex-col gap-1">
+        <label class="text-xs text-cife-muted">Título *</label>
+        <input formControlName="titulo" type="text"
+               placeholder="Título de la novedad"
+               class="border rounded-lg px-3 py-2.5 text-sm outline-none
+                      transition-colors focus:border-cife-primary"
+               [class.border-red-300]="tieneError('titulo')"
+               [class.border-cife-border]="!tieneError('titulo')"/>
+        <p *ngIf="tieneError('titulo')" class="text-red-500 text-xs">
+          El título es obligatorio.
+        </p>
+      </div>
+
+      <div class="flex flex-col gap-1">
+        <label class="text-xs text-cife-muted">Subtítulo (opcional)</label>
+        <input formControlName="subtitulo" type="text"
+               placeholder="Subtítulo o bajada"
+               class="border border-cife-border rounded-lg px-3 py-2.5 text-sm
+                      outline-none focus:border-cife-primary transition-colors"/>
+      </div>
+
+      <div class="flex flex-col gap-1">
+        <label class="text-xs text-cife-muted">Descripción *</label>
+        <textarea formControlName="descripcion" rows="5"
+                  placeholder="Contenido de la novedad"
+                  class="border rounded-lg px-3 py-2.5 text-sm outline-none
+                         transition-colors focus:border-cife-primary resize-none"
+                  [class.border-red-300]="tieneError('descripcion')"
+                  [class.border-cife-border]="!tieneError('descripcion')">
+        </textarea>
+        <p *ngIf="tieneError('descripcion')" class="text-red-500 text-xs">
+          La descripción es obligatoria.
+        </p>
+      </div>
+
+      <div class="flex flex-col gap-1">
+        <label class="text-xs text-cife-muted">Imágenes</label>
+        <app-image-uploader
+          [imagenes]="imagenes"
+          (imagenesChange)="imagenes = $event">
+        </app-image-uploader>
+      </div>
+
+      <div class="flex gap-3 justify-end pt-2 border-t border-cife-border">
+        <a routerLink="/admin/novedades" class="btn-outline text-sm">
+          Cancelar
+        </a>
+        <button type="submit" [disabled]="guardando" class="btn-primary text-sm">
+          {{ guardando ? 'Guardando...' : esEdicion ? 'Guardar cambios' : 'Publicar novedad' }}
+        </button>
+      </div>
+
+    </form>
+
+  </div>
+</div>

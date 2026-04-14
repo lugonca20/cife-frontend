@@ -1,0 +1,67 @@
+<div class="min-h-screen bg-cife-bg">
+  <div class="max-w-5xl mx-auto px-4 py-8">
+
+    <div class="flex items-center justify-between mb-6">
+      <div>
+        <a routerLink="/admin/dashboard"
+           class="border border-cife-border hover:border-cife-primary text-cife-muted
+                  hover:text-cife-primary text-xs px-3 py-1.5 rounded-lg
+                  transition-colors mb-4 inline-block">
+          ← Atrás
+        </a>
+        <h1 class="font-display font-medium text-cife-text text-xl">Contacto</h1>
+      </div>
+      <a routerLink="/admin/contacto/nuevo" class="btn-primary text-sm">
+        + Nuevo dato
+      </a>
+    </div>
+
+    <app-loading-spinner *ngIf="cargando" />
+
+    <div *ngIf="!cargando && contactos.length === 0"
+         class="text-center py-16 text-cife-muted text-sm">
+      No hay datos de contacto cargados.
+    </div>
+
+    <div *ngIf="!cargando && contactos.length > 0" class="flex flex-col gap-3">
+      <div *ngFor="let contacto of contactos"
+           class="card-cife flex items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+          <div class="w-7 h-7 bg-cife-soft rounded-full flex items-center
+                      justify-center flex-shrink-0">
+            <span class="text-cife-primary text-xs font-medium">
+              {{ contacto.orden }}
+            </span>
+          </div>
+          <span class="badge-presencial text-xs">
+            {{ etiquetaTipo(contacto.tipo) }}
+          </span>
+          <div>
+            <p class="text-sm font-medium text-cife-text">{{ contacto.valor }}</p>
+            <p *ngIf="contacto.etiqueta" class="text-xs text-cife-muted">
+              {{ contacto.etiqueta }}
+            </p>
+          </div>
+        </div>
+        <div class="flex gap-2 flex-shrink-0">
+          <a [routerLink]="['/admin/contacto', contacto.id, 'editar']"
+             class="btn-outline text-xs px-3 py-1.5">
+            Editar
+          </a>
+          <button (click)="confirmarEliminar(contacto)"
+                  class="bg-red-50 hover:bg-red-100 text-red-600 border border-red-200
+                         text-xs px-3 py-1.5 rounded-lg transition-colors">
+            Eliminar
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<app-confirm-dialog
+  [visible]="dialogVisible"
+  [mensaje]="'¿Estás seguro que querés eliminar este dato de contacto?'"
+  (confirmado)="eliminar()"
+  (cancelado)="cancelar()" />

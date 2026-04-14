@@ -1,0 +1,69 @@
+<div class="min-h-screen bg-cife-bg">
+  <div class="max-w-5xl mx-auto px-4 py-8">
+
+    <div class="flex items-center justify-between mb-6">
+      <div>
+        <a routerLink="/admin/dashboard"
+           class="border border-cife-border hover:border-cife-primary text-cife-muted
+                  hover:text-cife-primary text-xs px-3 py-1.5 rounded-lg
+                  transition-colors mb-4 inline-block">
+          ← Atrás
+        </a>
+        <h1 class="font-display font-medium text-cife-text text-xl">Cursos</h1>
+      </div>
+      <a routerLink="/admin/cursos/nuevo" class="btn-primary text-sm">
+        + Nuevo curso
+      </a>
+    </div>
+
+    <app-loading-spinner *ngIf="cargando" />
+
+    <div *ngIf="!cargando && cursos.length === 0"
+         class="text-center py-16 text-cife-muted text-sm">
+      No hay cursos cargados todavía.
+    </div>
+
+    <div *ngIf="!cargando && cursos.length > 0" class="flex flex-col gap-3">
+      <div *ngFor="let curso of cursos"
+           class="card-cife flex flex-col sm:flex-row sm:items-center
+                  justify-between gap-4">
+        <div class="flex-1">
+          <div class="flex items-center gap-2 mb-1">
+            <span [class]="curso.modalidad === 'PRESENCIAL' ? 'badge-presencial' :
+                           curso.modalidad === 'VIRTUAL' ? 'badge-virtual' :
+                           'badge-semipresencial'">
+              {{ curso.modalidad === 'PRESENCIAL' ? 'Presencial' :
+                 curso.modalidad === 'VIRTUAL' ? 'Virtual' : 'Semi-presencial' }}
+            </span>
+          </div>
+          <p class="font-medium text-cife-text text-sm">{{ curso.titulo }}</p>
+          <p class="text-cife-muted text-xs mt-0.5 line-clamp-1">
+            {{ curso.descripcion }}
+          </p>
+          <div class="flex flex-wrap gap-1.5 mt-2">
+            <span *ngIf="curso.horario" class="chip text-xs">{{ curso.horario }}</span>
+            <span *ngIf="curso.duracion" class="chip text-xs">{{ curso.duracion }}</span>
+          </div>
+        </div>
+        <div class="flex gap-2 flex-shrink-0">
+          <a [routerLink]="['/admin/cursos', curso.id, 'editar']"
+             class="btn-outline text-xs px-3 py-1.5">
+            Editar
+          </a>
+          <button (click)="confirmarEliminar(curso)"
+                  class="bg-red-50 hover:bg-red-100 text-red-600 border border-red-200
+                         text-xs px-3 py-1.5 rounded-lg transition-colors">
+            Eliminar
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<app-confirm-dialog
+  [visible]="dialogVisible"
+  [mensaje]="'¿Estás seguro que querés eliminar el curso \'' + (cursoAEliminar?.titulo || '') + '\'? Esta acción no se puede deshacer.'"
+  (confirmado)="eliminar()"
+  (cancelado)="cancelar()" />

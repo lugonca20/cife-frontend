@@ -1,0 +1,42 @@
+<div class="max-w-6xl mx-auto px-4 py-10">
+
+  <div class="mb-8">
+    <p class="section-label">Formación</p>
+    <h1 class="section-title">Cursos disponibles</h1>
+    <p class="text-cife-muted text-sm max-w-xl leading-relaxed">
+      Todos nuestros cursos están diseñados por profesionales de la salud
+      con experiencia docente activa.
+    </p>
+  </div>
+
+<div class="flex gap-2 mb-8 flex-wrap">
+  <button (click)="filtro = 'TODOS'"
+          [class]="filtro === 'TODOS' ? 'btn-primary text-sm px-4 py-2' : 'btn-outline text-sm px-4 py-2'">
+    Todos
+  </button>
+  <button (click)="filtro = 'PRESENCIAL'"
+          [class]="filtro === 'PRESENCIAL' ? 'btn-primary text-sm px-4 py-2' : 'btn-outline text-sm px-4 py-2'">
+    Presencial
+  </button>
+  <button (click)="filtro = 'SEMI_PRESENCIAL'"
+          [class]="filtro === 'SEMI_PRESENCIAL' ? 'btn-primary text-sm px-4 py-2' : 'btn-outline text-sm px-4 py-2'">
+    Semi-presencial
+  </button>
+  <button (click)="filtro = 'VIRTUAL'"
+          [class]="filtro === 'VIRTUAL' ? 'btn-primary text-sm px-4 py-2' : 'btn-outline text-sm px-4 py-2'">
+    Virtual
+  </button>
+</div>
+
+  <app-loading-spinner *ngIf="cargando" />
+
+  <div *ngIf="!cargando" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+    <app-curso-card *ngFor="let curso of cursosFiltrados" [curso]="curso" />
+  </div>
+
+  <div *ngIf="!cargando && cursosFiltrados.length === 0"
+       class="text-center py-16 text-cife-muted text-sm">
+    No hay cursos disponibles con ese filtro.
+  </div>
+
+</div>

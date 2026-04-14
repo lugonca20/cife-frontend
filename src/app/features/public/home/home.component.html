@@ -1,0 +1,346 @@
+<section class="relative min-h-screen md:min-h-[600px] flex items-center
+                justify-center overflow-hidden">
+
+  <div class="absolute inset-0">
+    <img src="assets/cife_principal.jpeg"
+         alt="Enfermería"
+         class="w-full h-full object-cover"/>
+    <div class="absolute inset-0 bg-black/55"></div>
+  </div>
+
+  <div class="relative z-10 max-w-6xl mx-auto px-4 pt-12 pb-32 text-center">
+    <h1 class="font-display text-5xl md:text-6xl text-white leading-tight mb-6">
+      Centro Integral de<br class="hidden md:block">
+      Formación en Enfermería
+    </h1>
+    <p class="text-white/85 text-lg md:text-xl max-w-2xl mx-auto mb-8 leading-relaxed">
+      Formamos los profesionales de la salud que Uruguay necesita.
+      Educación de calidad, con vocación y compromiso.
+    </p>
+  </div>
+
+</section>
+<section class="max-w-6xl mx-auto px-4 py-12">
+  <div class="flex items-end justify-between mb-6">
+    <div>
+      <p class="section-label">Cursos</p>
+      <h2 class="section-title">Formación disponible</h2>
+    </div>
+    <a routerLink="/cursos" class="btn-outline text-sm hidden md:flex items-center gap-1">
+      Ver todos los cursos →
+    </a>
+  </div>
+
+  <app-loading-spinner *ngIf="cargandoCursos" />
+
+  <div *ngIf="!cargandoCursos" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+    <app-curso-card *ngFor="let curso of cursos" [curso]="curso" />
+  </div>
+
+  <div *ngIf="!cargandoCursos && cursos.length === 0"
+       class="text-center py-12 text-cife-muted text-sm">
+    No hay cursos disponibles por el momento.
+  </div>
+
+  <a routerLink="/cursos" class="btn-outline w-full mt-6 text-center block md:hidden">
+    Ver todos los cursos
+  </a>
+</section>
+
+<section class="bg-cife-soft border-y border-cife-border">
+  <div class="max-w-6xl mx-auto px-4 py-12">
+      
+    <div class="grid grid-cols-1 lg:grid-cols-5 gap-10 items-start mb-10">
+      <div class="lg:col-span-2">
+        <h2 class="section-title mb-4">
+          {{ porQueCife?.titulo || 'Lo que nos diferencia' }}
+        </h2>
+        <p *ngIf="porQueCife?.contenido"
+           class="text-cife-muted text-sm leading-relaxed whitespace-pre-line">
+          {{ porQueCife?.contenido }}
+        </p>
+      </div>
+    
+      <div *ngIf="imagenesPorQueCife.length > 0" class="lg:col-span-3">
+        <app-carousel
+          [imagenes]="imagenesPorQueCife"
+          [alt]="porQueCife?.titulo || '¿Por qué CIFE?'">
+        </app-carousel>
+      </div>
+    </div>
+    
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+
+  <div class="bg-white rounded-xl p-7 border border-cife-border">
+    <div class="w-14 h-14 bg-cife-primary rounded-full flex items-center
+                justify-center mb-5">
+      <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"
+           stroke-linecap="round" class="w-7 h-7">
+        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+      </svg>
+    </div>
+    <h4 class="font-display text-cife-dark text-base mb-3">Docentes especializados</h4>
+    <p class="text-cife-muted text-sm leading-relaxed">
+      Profesionales activos en el sistema de salud uruguayo.
+    </p>
+  </div>
+
+  <div class="bg-white rounded-xl p-7 border border-cife-border">
+    <div class="w-14 h-14 bg-cife-primary rounded-full flex items-center
+                justify-center mb-5">
+      <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"
+           stroke-linecap="round" class="w-7 h-7">
+        <rect x="2" y="3" width="20" height="14" rx="2"/>
+        <path d="M8 21h8M12 17v4"/>
+      </svg>
+    </div>
+    <h4 class="font-display text-cife-dark text-base mb-3">Modalidad flexible</h4>
+    <p class="text-cife-muted text-sm leading-relaxed">
+      Cursos presenciales y virtuales adaptados a tu horario.
+    </p>
+  </div>
+
+  <div class="bg-white rounded-xl p-7 border border-cife-border">
+    <div class="w-14 h-14 bg-cife-primary rounded-full flex items-center
+                justify-center mb-5">
+      <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"
+           stroke-linecap="round" class="w-7 h-7">
+        <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
+        <circle cx="9" cy="7" r="4"/>
+        <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>
+      </svg>
+    </div>
+    <h4 class="font-display text-cife-dark text-base mb-3">Grupos reducidos</h4>
+    <p class="text-cife-muted text-sm leading-relaxed">
+      Atención personalizada para un aprendizaje más efectivo.
+    </p>
+  </div>
+
+  <div class="bg-white rounded-xl p-7 border border-cife-border">
+    <div class="w-14 h-14 bg-cife-primary rounded-full flex items-center
+                justify-center mb-5">
+      <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"
+           stroke-linecap="round" class="w-7 h-7">
+        <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+      </svg>
+    </div>
+    <h4 class="font-display text-cife-dark text-base mb-3">Enfoque práctico</h4>
+    <p class="text-cife-muted text-sm leading-relaxed">
+      Más del 60% de la carga horaria en práctica aplicada.
+    </p>
+  </div>
+
+</div>
+  </div>
+</section>
+
+<section class="bg-cife-bg border-y border-cife-border">
+  <div class="max-w-6xl mx-auto px-4 py-12">
+
+    <p class="section-label">Institucional</p>
+    <h2 class="section-title">Propósito y valores</h2>
+    <p class="text-cife-muted text-sm mb-10 leading-relaxed max-w-xl">
+      Nuestro proyecto educativo está guiado por valores humanistas, excelencia
+      técnica y un compromiso profundo con la salud de nuestra comunidad.
+    </p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
+
+      <div class="bg-white border border-cife-border border-t-2 rounded-b-xl
+                  rounded-tl-none rounded-tr-none p-7"
+           style="border-top-color: #2A8C7A;">
+        <div class="w-10 h-10 bg-cife-soft rounded-lg flex items-center
+                    justify-center mb-4">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#2A8C7A" stroke-width="2"
+               stroke-linecap="round" class="w-5 h-5">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+        </div>
+        <p class="section-label">Misión</p>
+        <h3 class="font-display font-medium text-cife-text text-base mb-3">
+          Formar con compromiso y humanismo
+        </h3>
+        <p class="text-cife-muted text-sm leading-relaxed">
+          Formar Auxiliares de Enfermería con nivel técnico acorde a las demandas
+          de salud actuales, comprometidos con la profesión, destacándose por su
+          actitud humanista y responsable frente a la atención integral segura y
+          de calidad a los pacientes, sus familias y comunidades.
+        </p>
+      </div>
+
+      <div class="bg-white border border-cife-border border-t-2 rounded-b-xl
+                  rounded-tl-none rounded-tr-none p-7"
+           style="border-top-color: #2A8C7A;">
+        <div class="w-10 h-10 bg-cife-soft rounded-lg flex items-center
+                    justify-center mb-4">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#2A8C7A" stroke-width="2"
+               stroke-linecap="round" class="w-5 h-5">
+            <circle cx="12" cy="12" r="10"/>
+            <circle cx="12" cy="12" r="3"/>
+          </svg>
+        </div>
+        <p class="section-label">Visión</p>
+        <h3 class="font-display font-medium text-cife-text text-base mb-3">
+          Referentes en formación de enfermería
+        </h3>
+        <p class="text-cife-muted text-sm leading-relaxed">
+          Ser referentes en el ámbito de la formación en Enfermería en el
+          departamento de Artigas y en el país, brindando un alto nivel de
+          educación enfocado en la eficacia técnica y humana de los egresados,
+          procurando siempre la calidad y la seguridad de las personas.
+        </p>
+      </div>
+
+    </div>
+
+    <div class="bg-white border border-cife-border border-t-2 rounded-b-xl
+                rounded-tl-none rounded-tr-none p-7"
+         style="border-top-color: #2A8C7A;">
+      <div class="w-10 h-10 bg-cife-soft rounded-lg flex items-center
+                  justify-center mb-4">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#2A8C7A" stroke-width="2"
+             stroke-linecap="round" class="w-5 h-5">
+          <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+        </svg>
+      </div>
+      <p class="section-label">Objetivos</p>
+      <h3 class="font-display font-medium text-cife-text text-base mb-4">
+        Nuestro proyecto educativo
+      </h3>
+      <ul class="flex flex-col gap-4">
+        <li class="flex gap-3 items-start">
+          <div class="w-5 h-5 bg-cife-soft rounded-full flex items-center
+                      justify-center flex-shrink-0 mt-0.5">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#2A8C7A" stroke-width="3"
+                 stroke-linecap="round" class="w-2.5 h-2.5">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+          </div>
+          <p class="text-cife-muted text-sm leading-relaxed">
+            Brindar a nuestra sociedad, especialmente en el área del departamento
+            de Artigas, un espacio de formación en Enfermería a nivel Auxiliar que
+            se distinga por su excelencia en el ámbito de la educación técnica y humana.
+          </p>
+        </li>
+        <li class="flex gap-3 items-start">
+          <div class="w-5 h-5 bg-cife-soft rounded-full flex items-center
+                      justify-center flex-shrink-0 mt-0.5">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#2A8C7A" stroke-width="3"
+                 stroke-linecap="round" class="w-2.5 h-2.5">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+          </div>
+          <p class="text-cife-muted text-sm leading-relaxed">
+            Contribuir a la conformación de los equipos de Salud con Auxiliares de
+            Enfermería capaces de brindar cuidados acordes a su nivel de formación,
+            trabajando en relación a la gestión del cuidado humanizado como enfermero.
+          </p>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<section class="max-w-6xl mx-auto px-4 py-12">
+  <div class="flex items-end justify-between mb-6">
+    <div>
+      <p class="section-label">Novedades</p>
+      <h2 class="section-title">Últimas noticias</h2>
+    </div>
+    <a routerLink="/novedades" class="btn-outline text-sm hidden md:flex items-center gap-1">
+      Ver todas las novedades →
+    </a>
+  </div>
+
+  <app-loading-spinner *ngIf="cargandoNovedades" />
+
+  <div *ngIf="!cargandoNovedades" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+    <app-novedad-card *ngFor="let novedad of novedades" [novedad]="novedad" />
+  </div>
+
+  <div *ngIf="!cargandoNovedades && novedades.length === 0"
+       class="text-center py-12 text-cife-muted text-sm">
+    No hay novedades por el momento.
+  </div>
+
+  <a routerLink="/novedades" class="btn-outline w-full mt-6 text-center block md:hidden">
+    Ver todas las novedades
+  </a>
+</section>
+
+<section class="bg-cife-primary">
+  <div class="max-w-6xl mx-auto px-4 py-12">
+    <p class="text-white/70 text-xs uppercase tracking-widest mb-2">Consultas</p>
+    <h2 class="font-display text-2xl font-medium text-white mb-2">
+      ¿Tenés alguna pregunta?
+    </h2>
+    <p class="text-white/70 text-sm mb-6">
+      Completá el formulario y te respondemos a la brevedad.
+    </p>
+
+    <div *ngIf="enviado"
+         class="bg-white border border-cife-primary rounded-xl p-5 mb-6
+                text-sm text-cife-dark font-medium max-w-2xl flex items-start gap-3">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-cife-primary flex-shrink-0 mt-0.5"
+           fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+      </svg>
+      ¡Tu consulta fue enviada correctamente! Te responderemos a la brevedad.
+    </div>
+
+    <div *ngIf="errorEnvio"
+         class="bg-red-500/30 border border-red-300/40 rounded-xl p-4 mb-6
+                text-sm text-white max-w-2xl">
+      Ocurrió un error al enviar. Por favor intentá de nuevo.
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="enviar()" class="max-w-2xl">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+        <div class="flex flex-col gap-1">
+  <label class="text-white/80 text-xs">Nombre *</label>
+  <input formControlName="nombre" type="text" placeholder="Tu nombre completo"
+         [class]="tieneError('nombre') ?
+           'bg-white/15 border border-red-300 rounded-lg px-3 py-2.5 text-white text-sm placeholder:text-white/40 outline-none transition-colors' :
+           'bg-white/15 border border-white/30 rounded-lg px-3 py-2.5 text-white text-sm placeholder:text-white/40 outline-none transition-colors'"/>
+  <p *ngIf="tieneError('nombre')" class="text-red-300 text-xs">
+    El nombre es obligatorio.
+  </p>
+</div>
+
+<div class="flex flex-col gap-1">
+  <label class="text-white/80 text-xs">Email *</label>
+  <input formControlName="email" type="email" placeholder="tu@email.com"
+         [class]="tieneError('email') ?
+           'bg-white/15 border border-red-300 rounded-lg px-3 py-2.5 text-white text-sm placeholder:text-white/40 outline-none transition-colors' :
+           'bg-white/15 border border-white/30 rounded-lg px-3 py-2.5 text-white text-sm placeholder:text-white/40 outline-none transition-colors'"/>
+  <p *ngIf="tieneError('email')" class="text-red-300 text-xs">
+    Ingresá un email válido.
+  </p>
+</div>
+
+<div class="flex flex-col gap-1 md:col-span-2">
+  <label class="text-white/80 text-xs">Mensaje *</label>
+  <textarea formControlName="mensaje" rows="3" placeholder="¿En qué podemos ayudarte?"
+            [class]="tieneError('mensaje') ?
+              'w-full bg-white/15 border border-red-300 rounded-lg px-3 py-2.5 text-white text-sm placeholder:text-white/40 outline-none transition-colors resize-none' :
+              'w-full bg-white/15 border border-white/30 rounded-lg px-3 py-2.5 text-white text-sm placeholder:text-white/40 outline-none transition-colors resize-none'">
+  </textarea>
+  <p *ngIf="tieneError('mensaje')" class="text-red-300 text-xs">
+    El mensaje es obligatorio.
+  </p>
+</div>
+      </div>
+
+      <button type="submit" [disabled]="enviando"
+              class="mt-4 bg-white text-cife-primary font-medium text-sm
+                     px-6 py-2.5 rounded-lg hover:bg-cife-soft transition-colors
+                     disabled:opacity-60">
+        <span *ngIf="!enviando">Enviar consulta</span>
+        <span *ngIf="enviando">Enviando...</span>
+      </button>
+    </form>
+
+  </div>
+</section>

@@ -1,12 +1,30 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
+import { NavbarComponent } from './shared/components/navbar/navbar.component';
+import { FooterComponent } from './shared/components/footer/footer.component';
+import { CommonModule } from '@angular/common';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  standalone: true,
+  imports: [RouterOutlet, NavbarComponent, FooterComponent, CommonModule],
+  template: `
+    <app-navbar *ngIf="mostrarNavbar" />
+    <main class="min-h-screen">
+      <router-outlet />
+    </main>
+    <app-footer *ngIf="mostrarNavbar" />
+  `
 })
 export class AppComponent {
-  title = 'cife-frontend';
+  mostrarNavbar = true;
+
+  constructor(private router: Router) {
+    this.router.events.pipe(
+      filter(e => e instanceof NavigationEnd)
+    ).subscribe((e: any) => {
+      this.mostrarNavbar = !e.url.startsWith('/admin');
+    });
+  }
 }

@@ -1,0 +1,43 @@
+<a [routerLink]="['/cursos', curso.id]"
+   class="card-cife flex flex-col gap-0 h-full overflow-hidden p-0
+          hover:border-cife-primary transition-colors cursor-pointer block">
+
+  <div class="relative bg-cife-soft w-full h-48 overflow-hidden rounded-t-xl">
+    <img *ngIf="curso.imagenes && curso.imagenes.length > 0"
+         [src]="curso.imagenes[0]"
+         [alt]="curso.titulo"
+         class="w-full h-full object-cover object-center"/>
+    <div *ngIf="!curso.imagenes || curso.imagenes.length === 0"
+         class="w-full h-full flex items-center justify-center">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#2A8C7A" stroke-width="1.5"
+           stroke-linecap="round" class="w-10 h-10 opacity-30">
+        <path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/>
+        <path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/>
+      </svg>
+    </div>
+    <div class="absolute top-3 left-3">
+      <span [class]="curso.modalidad === 'PRESENCIAL' ? 'badge-presencial' :
+                     curso.modalidad === 'VIRTUAL' ? 'badge-virtual' :
+                     'badge-semipresencial'">
+        {{ curso.modalidad === 'PRESENCIAL' ? 'Presencial' :
+           curso.modalidad === 'VIRTUAL' ? 'Virtual' : 'Semi-presencial' }}
+      </span>
+    </div>
+  </div>
+
+  <div class="flex flex-col gap-3 p-5 flex-1">
+    <h3 class="font-display text-cife-text text-base">{{ curso.titulo }}</h3>
+    <p class="text-cife-muted text-sm leading-relaxed flex-1 line-clamp-3">
+      {{ curso.descripcion }}
+    </p>
+    <div class="flex flex-wrap gap-2">
+      <span *ngIf="curso.frecuencia" class="chip">{{ curso.frecuencia }}</span>
+      <span *ngIf="curso.horario" class="chip">{{ curso.horario }}</span>
+      <span *ngIf="curso.duracion" class="chip">{{ curso.duracion }}</span>
+    </div>
+    <p class="text-cife-primary text-sm font-medium mt-auto">
+      Ver detalle →
+    </p>
+  </div>
+
+</a>

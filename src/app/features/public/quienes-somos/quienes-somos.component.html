@@ -1,0 +1,46 @@
+<div class="max-w-6xl mx-auto px-4 py-10">
+
+  <p class="section-label">La escuela</p>
+
+  <app-loading-spinner *ngIf="cargando" />
+
+  <div *ngIf="!cargando && seccion">
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
+
+      <div>
+        <h1 class="font-display text-3xl text-cife-text mb-6">
+          {{ seccion.titulo || '¿Quiénes somos?' }}
+        </h1>
+        <p class="text-cife-text text-base leading-relaxed whitespace-pre-line">
+          {{ seccion.contenido }}
+        </p>
+      </div>
+
+      <div>
+        <app-carousel
+          [imagenes]="imagenes"
+          [alt]="seccion.titulo || '¿Quiénes somos?'">
+        </app-carousel>
+
+        <div *ngIf="imagenes.length === 0"
+             class="bg-cife-soft rounded-2xl h-64 flex items-center justify-center">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#2A8C7A" stroke-width="1.5"
+               stroke-linecap="round" class="w-12 h-12 opacity-30">
+            <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>
+          </svg>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div *ngIf="!cargando && !seccion"
+       class="text-center py-16 text-cife-muted text-sm">
+    Contenido no disponible por el momento.
+  </div>
+
+</div>

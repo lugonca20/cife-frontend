@@ -1,0 +1,70 @@
+<a routerLink="/inicio"
+   class="absolute top-4 left-4 text-cife-muted hover:text-cife-primary
+          text-sm transition-colors flex items-center gap-1">
+  ← Volver al inicio
+</a>
+
+<div class="min-h-screen bg-cife-bg flex items-center justify-center px-4">
+  <div class="w-full max-w-sm">
+
+    <div class="text-center mb-8">
+      <div class="w-14 h-14 bg-cife-primary rounded-full flex items-center
+                  justify-center mx-auto mb-4">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"
+             stroke-linecap="round" class="w-7 h-7">
+          <path d="M12 5v14M5 12h14"/>
+        </svg>
+      </div>
+      <h1 class="font-display font-medium text-cife-text text-xl mb-1">
+        Panel CIFE
+      </h1>
+      <p class="text-cife-muted text-sm">Acceso exclusivo para administradores</p>
+    </div>
+
+    <div class="card-cife">
+
+      <div *ngIf="error"
+           class="bg-red-50 border border-red-200 rounded-lg p-3 mb-4 text-sm text-red-700">
+        Usuario o contraseña incorrectos.
+      </div>
+
+      <form [formGroup]="form" (ngSubmit)="ingresar()" class="flex flex-col gap-4">
+
+        <div class="flex flex-col gap-1">
+          <label class="text-xs text-cife-muted">Usuario</label>
+          <input formControlName="username" type="text"
+                 placeholder="admin"
+                 class="border rounded-lg px-3 py-2.5 text-sm outline-none
+                        transition-colors focus:border-cife-primary"
+                 [class.border-red-300]="tieneError('username')"
+                 [class.border-cife-border]="!tieneError('username')"/>
+          <p *ngIf="tieneError('username')" class="text-red-500 text-xs">
+            El usuario es obligatorio.
+          </p>
+        </div>
+
+        <div class="flex flex-col gap-1">
+          <label class="text-xs text-cife-muted">Contraseña</label>
+          <input formControlName="password" type="password"
+                 placeholder="••••••••"
+                 class="border rounded-lg px-3 py-2.5 text-sm outline-none
+                        transition-colors focus:border-cife-primary"
+                 [class.border-red-300]="tieneError('password')"
+                 [class.border-cife-border]="!tieneError('password')"/>
+          <p *ngIf="tieneError('password')" class="text-red-500 text-xs">
+            La contraseña es obligatoria.
+          </p>
+        </div>
+
+        <button type="submit" [disabled]="cargando"
+                class="btn-primary flex items-center justify-center gap-2 mt-2">
+          <span *ngIf="!cargando">Ingresar</span>
+          <span *ngIf="cargando">Verificando...</span>
+        </button>
+
+      </form>
+
+    </div>
+
+  </div>
+</div>

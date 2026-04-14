@@ -1,0 +1,132 @@
+<div class="min-h-screen bg-cife-bg">
+  <div class="max-w-2xl mx-auto px-4 py-8">
+
+    <div class="mb-6">
+      <a routerLink="/admin/cursos"
+         class="text-cife-muted text-xs hover:text-cife-primary transition-colors mb-1 inline-block">
+        ← Volver a cursos
+      </a>
+      <h1 class="font-display font-medium text-cife-text text-xl">
+        {{ esEdicion ? 'Editar curso' : 'Nuevo curso' }}
+      </h1>
+    </div>
+
+    <div *ngIf="error"
+         class="bg-red-50 border border-red-200 rounded-xl p-4 mb-6 text-sm text-red-700">
+      Ocurrió un error al guardar. Por favor intentá de nuevo.
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="guardar()" class="card-cife flex flex-col gap-5">
+
+      <div class="flex flex-col gap-1">
+        <label class="text-xs text-cife-muted">Título *</label>
+        <input formControlName="titulo" type="text"
+               placeholder="Ej: Enfermería básica"
+               class="border rounded-lg px-3 py-2.5 text-sm outline-none
+                      transition-colors focus:border-cife-primary"
+               [class.border-red-300]="tieneError('titulo')"
+               [class.border-cife-border]="!tieneError('titulo')"/>
+        <p *ngIf="tieneError('titulo')" class="text-red-500 text-xs">
+          El título es obligatorio.
+        </p>
+      </div>
+
+      <div class="flex flex-col gap-1">
+        <label class="text-xs text-cife-muted">Modalidad *</label>
+        <select formControlName="modalidad"
+                class="border border-cife-border rounded-lg px-3 py-2.5
+                       text-sm outline-none focus:border-cife-primary transition-colors">
+          <option value="PRESENCIAL">Presencial</option>
+          <option value="VIRTUAL">Virtual</option>
+          <option value="SEMI_PRESENCIAL">Semi-presencial</option>
+        </select>
+      </div>
+
+      <div class="flex flex-col gap-1">
+        <label class="text-xs text-cife-muted">Descripción *</label>
+        <textarea formControlName="descripcion" rows="6"
+                  placeholder="Descripción general del curso"
+                  class="border rounded-lg px-3 py-2.5 text-sm outline-none
+                         transition-colors focus:border-cife-primary resize-none"
+                  [class.border-red-300]="tieneError('descripcion')"
+                  [class.border-cife-border]="!tieneError('descripcion')">
+        </textarea>
+        <p *ngIf="tieneError('descripcion')" class="text-red-500 text-xs">
+          La descripción es obligatoria.
+        </p>
+      </div>
+
+      <div class="flex flex-col gap-1">
+        <label class="text-xs text-cife-muted">Objetivo</label>
+        <textarea formControlName="objetivo" rows="5"
+                  placeholder="Objetivo del curso"
+                  class="border border-cife-border rounded-lg px-3 py-2.5 text-sm
+                         outline-none focus:border-cife-primary transition-colors resize-none">
+        </textarea>
+      </div>
+
+      <div class="flex flex-col gap-1">
+        <label class="text-xs text-cife-muted">Requisitos</label>
+        <textarea formControlName="requisitos" rows="5"
+                  placeholder="Requisitos para inscribirse"
+                  class="border border-cife-border rounded-lg px-3 py-2.5 text-sm
+                         outline-none focus:border-cife-primary transition-colors resize-none">
+        </textarea>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+
+        <div class="flex flex-col gap-1">
+          <label class="text-xs text-cife-muted">Fecha de inicio</label>
+          <input formControlName="fechaInicio" type="date"
+                 class="border border-cife-border rounded-lg px-3 py-2.5 text-sm
+                        outline-none focus:border-cife-primary transition-colors"/>
+        </div>
+
+        <div class="flex flex-col gap-1">
+          <label class="text-xs text-cife-muted">Duración</label>
+          <input formControlName="duracion" type="text"
+                 placeholder="Ej: 6 meses"
+                 class="border border-cife-border rounded-lg px-3 py-2.5 text-sm
+                        outline-none focus:border-cife-primary transition-colors"/>
+        </div>
+
+        <div class="flex flex-col gap-1">
+          <label class="text-xs text-cife-muted">Horario</label>
+          <input formControlName="horario" type="text"
+                 placeholder="Ej: Turno matutino de 8 a 12 hrs"
+                 class="border border-cife-border rounded-lg px-3 py-2.5 text-sm
+                        outline-none focus:border-cife-primary transition-colors"/>
+        </div>
+
+        <div class="flex flex-col gap-1">
+          <label class="text-xs text-cife-muted">Frecuencia</label>
+          <input formControlName="frecuencia" type="text"
+                 placeholder="Ej: Lunes a viernes"
+                 class="border border-cife-border rounded-lg px-3 py-2.5 text-sm
+                        outline-none focus:border-cife-primary transition-colors"/>
+        </div>
+
+      </div>
+      
+      <div class="flex flex-col gap-1">
+        <label class="text-xs text-cife-muted">Imágenes</label>
+        <app-image-uploader
+          [imagenes]="imagenes"
+          (imagenesChange)="imagenes = $event">
+        </app-image-uploader>
+      </div>
+      
+      <div class="flex gap-3 justify-end pt-2 border-t border-cife-border">
+        <a routerLink="/admin/cursos" class="btn-outline text-sm">
+          Cancelar
+        </a>
+        <button type="submit" [disabled]="guardando" class="btn-primary text-sm">
+          {{ guardando ? 'Guardando...' : esEdicion ? 'Guardar cambios' : 'Crear curso' }}
+        </button>
+      </div>
+
+    </form>
+
+  </div>
+</div>

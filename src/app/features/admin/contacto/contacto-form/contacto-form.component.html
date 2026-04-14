@@ -1,0 +1,71 @@
+<div class="min-h-screen bg-cife-bg">
+  <div class="max-w-2xl mx-auto px-4 py-8">
+
+    <div class="mb-6">
+      <a routerLink="/admin/contacto"
+         class="text-cife-muted text-xs hover:text-cife-primary transition-colors mb-1 inline-block">
+        ← Volver a contacto
+      </a>
+      <h1 class="font-display font-medium text-cife-text text-xl">
+        {{ esEdicion ? 'Editar dato de contacto' : 'Nuevo dato de contacto' }}
+      </h1>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="guardar()" class="card-cife flex flex-col gap-5">
+
+      <div class="flex flex-col gap-1">
+        <label class="text-xs text-cife-muted">Tipo *</label>
+        <select formControlName="tipo"
+                class="border border-cife-border rounded-lg px-3 py-2.5 text-sm
+                       outline-none focus:border-cife-primary transition-colors">
+          <option value="TELEFONO">Teléfono</option>
+          <option value="EMAIL">Email</option>
+          <option value="DIRECCION">Dirección</option>
+          <option value="RED_SOCIAL">Red social</option>
+        </select>
+      </div>
+
+      <div class="flex flex-col gap-1">
+        <label class="text-xs text-cife-muted">Valor *</label>
+        <input formControlName="valor" type="text"
+               placeholder="Ej: +598 47 XX XXXX"
+               class="border rounded-lg px-3 py-2.5 text-sm outline-none
+                      transition-colors focus:border-cife-primary"
+               [class.border-red-300]="tieneError('valor')"
+               [class.border-cife-border]="!tieneError('valor')"/>
+        <p *ngIf="tieneError('valor')" class="text-red-500 text-xs">
+          El valor es obligatorio.
+        </p>
+      </div>
+
+      <div class="flex flex-col gap-1">
+        <label class="text-xs text-cife-muted">Etiqueta</label>
+        <input formControlName="etiqueta" type="text"
+               placeholder="Ej: Teléfono institucional"
+               class="border border-cife-border rounded-lg px-3 py-2.5 text-sm
+                      outline-none focus:border-cife-primary transition-colors"/>
+      </div>
+
+      <div class="flex flex-col gap-1">
+        <label class="text-xs text-cife-muted">
+          Orden de aparición
+        </label>
+        <p class="text-xs text-cife-muted/70 mb-1">
+          Número que define la posición en la página de contacto. El 1 aparece primero.
+        </p>
+        <input formControlName="orden" type="number" min="1" step="1"
+               class="border border-cife-border rounded-lg px-3 py-2.5 text-sm
+                      outline-none focus:border-cife-primary transition-colors w-32"/>
+      </div>
+
+      <div class="flex gap-3 justify-end pt-2 border-t border-cife-border">
+        <a routerLink="/admin/contacto" class="btn-outline text-sm">Cancelar</a>
+        <button type="submit" [disabled]="guardando" class="btn-primary text-sm">
+          {{ guardando ? 'Guardando...' : esEdicion ? 'Guardar cambios' : 'Agregar' }}
+        </button>
+      </div>
+
+    </form>
+
+  </div>
+</div>

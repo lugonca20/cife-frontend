@@ -1,1 +1,54 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,400;9..40,500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    background-color: #F5FAFA;
+    color: #1C2B2A;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+  }
+  h1, h2, h3, h4 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+  }
+  p {
+    font-size: 0.9375rem;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-cife-primary text-white rounded-lg px-6 py-3 text-base font-medium hover:bg-cife-dark transition-colors;
+  }
+  .btn-outline {
+    @apply bg-transparent text-cife-primary border border-cife-primary rounded-lg px-6 py-3 text-base font-medium hover:bg-cife-soft transition-colors;
+  }
+  .card-cife {
+    @apply bg-white border border-cife-border rounded-xl p-6;
+  }
+  .badge-presencial {
+    @apply inline-block bg-cife-soft text-cife-dark text-sm font-medium px-3 py-1 rounded-full;
+  }
+  .badge-semipresencial {
+    @apply inline-block bg-sky-50 text-sky-700 text-xs font-medium px-3 py-1 rounded-full;
+  }
+  .badge-virtual {
+    @apply inline-block bg-amber-50 text-amber-800 text-sm font-medium px-3 py-1 rounded-full;
+  }
+  .chip {
+    @apply text-sm text-cife-primary bg-cife-soft rounded-full px-3 py-1;
+  }
+  .section-label {
+    @apply text-sm font-medium text-cife-primary uppercase tracking-widest mb-2;
+  }
+  .section-title {
+    @apply text-3xl font-display text-cife-text mb-3;
+  }
+  .section-label {
+    @apply text-xs font-medium text-cife-primary uppercase tracking-widest mb-1;
+  }
+}

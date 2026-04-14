@@ -1,0 +1,85 @@
+<div class="min-h-screen bg-cife-bg">
+  <div class="max-w-2xl mx-auto px-4 py-8">
+
+    <div class="mb-6">
+      <a routerLink="/admin/dashboard"
+         class="border border-cife-border hover:border-cife-primary text-cife-muted
+                hover:text-cife-primary text-xs px-3 py-1.5 rounded-lg
+                transition-colors mb-4 inline-block">
+        ← Atrás
+      </a>
+      <h1 class="font-display font-medium text-cife-text text-xl">Secciones</h1>
+      <p class="text-cife-muted text-sm mt-1">
+        Editá el contenido de las secciones informativas del sitio.
+      </p>
+    </div>
+
+    <div class="flex gap-2 mb-6">
+      <button (click)="cambiarSeccion('quienes-somos')"
+              [class]="seccionActiva === 'quienes-somos' ?
+                       'btn-primary text-sm px-4 py-2' :
+                       'btn-outline text-sm px-4 py-2'">
+        ¿Quiénes somos?
+      </button>
+      <button (click)="cambiarSeccion('por-que-cife')"
+              [class]="seccionActiva === 'por-que-cife' ?
+                       'btn-primary text-sm px-4 py-2' :
+                       'btn-outline text-sm px-4 py-2'">
+        ¿Por qué CIFE?
+      </button>
+    </div>
+
+    <div *ngIf="guardado"
+         class="bg-green-50 border border-green-200 rounded-xl p-4 mb-4
+                text-sm text-green-700">
+      Sección guardada correctamente.
+    </div>
+
+    <div *ngIf="error"
+         class="bg-red-50 border border-red-200 rounded-xl p-4 mb-4
+                text-sm text-red-700">
+      Ocurrió un error al guardar. Por favor intentá de nuevo.
+    </div>
+
+    <form [formGroup]="formActivo" (ngSubmit)="guardar()"
+          class="card-cife flex flex-col gap-5">
+
+      <div class="flex flex-col gap-1">
+        <label class="text-xs text-cife-muted">Título de la sección</label>
+        <input formControlName="titulo" type="text"
+               placeholder="Ej: ¿Quiénes somos?"
+               class="border border-cife-border rounded-lg px-3 py-2.5 text-sm
+                      outline-none focus:border-cife-primary transition-colors"/>
+      </div>
+
+      <div class="flex flex-col gap-1">
+        <label class="text-xs text-cife-muted">Contenido *</label>
+        <textarea formControlName="contenido" rows="12"
+                  placeholder="Escribí el contenido de esta sección..."
+                  class="border rounded-lg px-3 py-2.5 text-sm outline-none
+                         transition-colors focus:border-cife-primary resize-none"
+                  [class.border-red-300]="tieneError('contenido')"
+                  [class.border-cife-border]="!tieneError('contenido')">
+        </textarea>
+        <p *ngIf="tieneError('contenido')" class="text-red-500 text-xs">
+          El contenido es obligatorio.
+        </p>
+      </div>
+
+      <div class="flex flex-col gap-1">
+        <app-image-uploader
+          [imagenes]="imagenesActivas"
+          (imagenesChange)="onImagenesChange($event)">
+        </app-image-uploader>
+      </div>
+
+      <div class="flex gap-3 justify-end pt-2 border-t border-cife-border">
+        <button type="submit" [disabled]="guardando" class="btn-primary text-sm">
+          {{ guardando ? 'Guardando...' : 'Guardar cambios' }}
+        </button>
+      </div>
+
+    </form>
+
+  </div>
+</div>
