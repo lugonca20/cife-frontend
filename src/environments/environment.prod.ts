@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://cife-backend.up.railway.app/api'
+  apiUrl: 'https://cife-backend-production.up.railway.app/api'
 };
